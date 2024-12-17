@@ -25,6 +25,9 @@ void rgbTask() {
 
 void lcdTask() {
 	while (true) {
+		lcd.writeText("Hello World!", 1);
+		lcd.writeTextScrolling("un message bien long pour test", 0, 400);
+		lcd.clearScreen();
 		lcd.scrollText("un message bien long pour test", 0, 400);
 	}
 }

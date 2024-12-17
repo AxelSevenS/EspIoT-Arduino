@@ -27,7 +27,7 @@ public:
 	}
 
 	// Méthode pour écrire un texte à une position donnée
-	void writeText(int col, int row, const char* text) {
+	void writeText(const char* text, int row, int col = 0) {
 		if (col >= 0 && col < cols && row >= 0 && row < rows) {
 			lcd.setCursor(col, row);
 			lcd.print(text);
@@ -42,7 +42,7 @@ public:
 	}
 
 	// Méthode pour défiler le texte sur l'écran
-	void scrollText(const char* text, int row, int delayTime) {
+	void writeTextScrolling(const char* text, int row, int delayTime) {
 		int len = strlen(text);
 		for (int i = 0; i <= len; i++) {
 			lcd.setCursor(0, row);
