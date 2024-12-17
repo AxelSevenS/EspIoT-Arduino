@@ -1,9 +1,11 @@
 #include <thread>
 #include "RGB.cpp"
 #include "LCD.cpp"
+#include "Window.cpp"
 
 RGB rgb;
 LCD lcd;
+Window window;
 
 
 void rgbTask() {
@@ -34,6 +36,7 @@ void setup() {
 #endif
 	rgb.begin ();
 	lcd.begin ();
+	window.begin ();
 
 	std::thread rgbThread(rgbTask);
     std::thread lcdThread(lcdTask);
@@ -43,4 +46,6 @@ void setup() {
 }
 
 void loop() {
+	window.LaunchTheServo(160);
+	window.LaunchTheServo(0);
 }
