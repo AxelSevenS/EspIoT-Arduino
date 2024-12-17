@@ -1,6 +1,11 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
+
+#define LCD_PIN 0x27
+#define LCD_COLS 16
+#define LCD_ROWS 2
+
 class LCD {
 
 private:
@@ -9,6 +14,8 @@ private:
 	uint8_t rows;
 
 public:
+	LCD() : LCD(LCD_PIN, LCD_COLS, LCD_ROWS) { }
+
 	LCD(uint8_t address, uint8_t cols, uint8_t rows)
 		: lcd(address, cols, rows), cols(cols), rows(rows) {
 	}
