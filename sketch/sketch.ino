@@ -1,10 +1,16 @@
 #include <thread>
+
+#include "TempHumSensor.cpp"
+
 #include "RGB.cpp"
 #include "LCD.cpp"
+
 #include "Window.cpp"
 
+TempHumSensor tempHum;
 RGB rgb;
 LCD lcd;
+
 Window window;
 
 
@@ -28,7 +34,13 @@ void lcdTask() {
 		lcd.writeText("Hello World!", 1);
 		lcd.writeTextScrolling("un message bien long pour test", 0, 400);
 		lcd.clearScreen();
-		lcd.scrollText("un message bien long pour test", 0, 400);
+	}
+}
+
+void tempHumTask() {
+	while (true) {
+		Serial.println("TempHumSensor");
+		tempHum.tempHumInfo();
 	}
 }
 
@@ -39,15 +51,24 @@ void setup() {
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
 	clock_prescale_set(clock_div_1);
 #endif
+	tempHum.begin ();
+
 	rgb.begin ();
 	lcd.begin ();
+
 	window.begin ();
 
-	std::thread rgbThread(rgbTask);
-    std::thread lcdThread(lcdTask);
 
-    rgbThread.detach();
-    lcdThread.detach();
+	std::thread tempHumThread(tempHumTask);
+
+	std::thread rgbThread(rgbTask);
+	std::thread lcdThread(lcdTask);
+
+
+	tempHumThread.detach();
+
+	rgbThread.detach();
+	lcdThread.detach();
 }
 
 void loop() {
