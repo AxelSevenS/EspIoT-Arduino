@@ -2,12 +2,15 @@
 
 #include "TempHumSensor.cpp"
 
+#include "LED.cpp"
 #include "RGB.cpp"
 #include "LCD.cpp"
 
 #include "Window.cpp"
 
 TempHumSensor tempHum;
+
+LED led;
 RGB rgb;
 LCD lcd;
 
@@ -53,6 +56,7 @@ void setup() {
 #endif
 	tempHum.begin ();
 
+	led.begin ();
 	rgb.begin ();
 	lcd.begin ();
 
@@ -72,7 +76,5 @@ void setup() {
 }
 
 void loop() {
-	window.LaunchTheServo(100);
-	delay(500);
-	window.LaunchTheServo(0);
+	led.blink(100);
 }
