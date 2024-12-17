@@ -46,6 +46,7 @@ void setup() {
 }
 
 void loop() {
-	window.LaunchTheServo(160);
+	window.LaunchTheServo(100);
+	delay(500);
 	window.LaunchTheServo(0);
 }
