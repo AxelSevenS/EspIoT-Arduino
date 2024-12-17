@@ -31,6 +31,8 @@ void lcdTask() {
 
 
 void setup() {
+	Serial.begin(115200);
+
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
 	clock_prescale_set(clock_div_1);
 #endif
