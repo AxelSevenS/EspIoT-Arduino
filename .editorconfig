@@ -1,0 +1,11 @@
+root = true
+
+[*.cpp]
+indent_size = 4
+indent_style = tab
+tab_width = 4
+
+[*.ino]
+indent_size = 4
+indent_style = tab
+tab_width = 4
