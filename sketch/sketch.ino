@@ -1,6 +1,8 @@
 #include <thread>
+#include <stdio.h>
 
 #include "TempHumSensor.cpp"
+#include "SteamSensor.cpp"
 
 #include "LED.cpp"
 #include "RGB.cpp"
@@ -8,7 +10,9 @@
 
 #include "Window.cpp"
 
+
 TempHumSensor tempHum;
+SteamSensor steam;
 
 LED led;
 RGB rgb;
@@ -16,20 +20,22 @@ LCD lcd;
 
 Window window;
 
+// String displayText = "Hello World!";
+
 
 void rgbTask() {
-    while (true) {
-        rgb.colorWipe(rgb.color(255, 0, 0), 50); // Rouge
-        rgb.colorWipe(rgb.color(0, 255, 0), 50); // Vert
-        rgb.colorWipe(rgb.color(0, 0, 255), 50); // Bleu
+	while (true) {
+		rgb.colorWipe(rgb.color(255, 0, 0), 50);
+		rgb.colorWipe(rgb.color(0, 255, 0), 50);
+		rgb.colorWipe(rgb.color(0, 0, 255), 50);
 
-        rgb.theaterChase(rgb.color(127, 127, 127), 50); // Blanc, demi-luminosité
-        rgb.theaterChase(rgb.color(127, 0, 0), 50);     // Rouge, demi-luminosité
-        rgb.theaterChase(rgb.color(0, 0, 127), 50);     // Bleu, demi-luminosité
+		rgb.theaterChase(rgb.color(127, 127, 127), 50);
+		rgb.theaterChase(rgb.color(127, 0, 0), 50);
+		rgb.theaterChase(rgb.color(0, 0, 127), 50);
 
-        rgb.rainbow(10);             // Cycle d'arc-en-ciel sur toute la bande
-        rgb.theaterChaseRainbow(50); // Variante de l'effet theaterChase avec arc-en-ciel
-    }
+		rgb.rainbow(10);             // Cycle d'arc-en-ciel sur toute la bande
+		rgb.theaterChaseRainbow(50); // Variante de l'effet theaterChase avec arc-en-ciel
+	}
 }
 
 void lcdTask() {
@@ -42,11 +48,12 @@ void lcdTask() {
 
 void tempHumTask() {
 	while (true) {
-		Serial.println("TempHumSensor");
-		tempHum.tempHumInfo();
+		// tempHum.printTempHumInfo();
+		steam.printSteamLevel();
+
+		delay(10000);
 	}
 }
-
 
 void setup() {
 	Serial.begin(115200);
@@ -54,6 +61,8 @@ void setup() {
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
 	clock_prescale_set(clock_div_1);
 #endif
+
+
 	tempHum.begin ();
 
 	led.begin ();

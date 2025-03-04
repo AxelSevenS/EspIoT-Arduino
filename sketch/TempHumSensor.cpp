@@ -1,6 +1,6 @@
 #include <DHT11.h>
 
-#define DHT11_PIN 4
+#define DHT11_PIN 32
 
 class TempHumSensor {
 private:
@@ -17,7 +17,7 @@ public:
 
 	void begin() { }
 
-	void tempHumInfo() {
+	void printTempHumInfo() {
 		int temp = dht.readTemperature();
 		int hum = dht.readHumidity();
 
