@@ -1,5 +1,6 @@
 #include <thread>
 #include <stdio.h>
+#include <ModbusSerial.h>
 
 #include "TempHumSensor.cpp"
 #include "SteamSensor.cpp"
@@ -19,6 +20,9 @@ RGB rgb;
 LCD lcd;
 
 Window window;
+
+#define mbSerial Serial1
+ModbusSerial mb(mbSerial, 1);
 
 // String displayText = "Hello World!";
 
@@ -46,17 +50,21 @@ void lcdTask() {
 	}
 }
 
-void tempHumTask() {
+void sensorTask() {
 	while (true) {
-		// tempHum.printTempHumInfo();
-		steam.printSteamLevel();
+		mb.Hreg(0, steam.readSteamLevel());
 
-		delay(10000);
+		mb.task();
+		delay(10);
 	}
 }
 
 void setup() {
 	Serial.begin(115200);
+
+	mbSerial.begin(9600, SERIAL_8N1, 4, 5);
+	mb.addHreg(0, 0);
+
 
 #if defined(__AVR_ATtiny85__) && (F_CPU == 16000000)
 	clock_prescale_set(clock_div_1);
@@ -72,18 +80,19 @@ void setup() {
 	window.begin ();
 
 
-	std::thread tempHumThread(tempHumTask);
+	std::thread sensorThread(sensorTask);
 
 	std::thread rgbThread(rgbTask);
 	std::thread lcdThread(lcdTask);
 
 
-	tempHumThread.detach();
+	sensorThread.detach();
 
 	rgbThread.detach();
 	lcdThread.detach();
 }
 
 void loop() {
+	delay(1000);
 	led.blink(100);
 }
