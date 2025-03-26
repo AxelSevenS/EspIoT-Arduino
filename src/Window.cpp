@@ -1,16 +1,10 @@
 #include <Arduino.h>
 
-#define SERVO_PIN 26
-
 class Window {
 
 private:
 	int servoPin;
 public:
-	Window()
-		: Window(SERVO_PIN)
-	{ }
-
 	Window(int servoPin)
 		: servoPin(servoPin)
 	{ }

@@ -1,12 +1,9 @@
 #include <Arduino.h>
 
-#define LED_PIN 13
-
 class LED {
 private:
 	uint8_t led;
 public:
-	LED() : LED(LED_PIN) { }
 	LED(uint8_t pin)
 		: led(pin)
 	{ }

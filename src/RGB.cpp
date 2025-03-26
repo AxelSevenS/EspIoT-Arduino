@@ -2,11 +2,6 @@
 #ifdef __AVR__
  #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
 #endif
-// Which pin on the Arduino is connected to the NeoPixels?
-// On a Trinket or Gemma we suggest changing this to 1:
-#define RGB_PIN 12
-// How many NeoPixels are attached to the Arduino?
-#define LED_COUNT 4
 
 
 
@@ -16,8 +11,6 @@ private:
 	Adafruit_NeoPixel strip;
 
 public:
-	RGB() : RGB(LED_COUNT, RGB_PIN) { }
-
 	RGB(uint8_t led_count, uint8_t pin)
 		: strip(led_count, pin) {
 	}
